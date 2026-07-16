@@ -542,7 +542,7 @@ int main()
 
         // Отрисовываем следующую фигуру
         int figureDraw = state.nextStateFigure;
-        if (state.removingLines) {
+        if (state.removingLines || (state.timer == 0.f && state.delayPlace == 0.f)) {
             figureDraw = state.stateFigure;
         }
         nextFigure = Figure(figureDraw, state.levelNum, blockTextures, false);

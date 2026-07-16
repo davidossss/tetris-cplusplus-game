@@ -1,0 +1,15 @@
+.vs/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+*.user
+*.suo
+*.db
+*.opendb
+*.sdf
+*.ipch
+*.log
+*.tlog
+*.log

@@ -70,18 +70,46 @@ void Figure::draw(sf::RenderWindow& window) {
 }
 
 void Figure::rotate() {
-    Block centerBlock = blocks[1];
+    int type = typeFigure - 1;
 
-    if (typeFigure - 1 == Fig_O) {
+    if (type == Fig_O) {
         return;
     }
 
+    if (type == Fig_I) {
+        bool isVertical = (blocks[0].getPosition().x == blocks[1].getPosition().x);
+
+        int cx = blocks[1].getPosition().x;
+        int cy = blocks[1].getPosition().y;
+
+        if (isVertical) {
+            blocks[0].setPosition(cx - 1, cy);
+            blocks[2].setPosition(cx + 1, cy);
+            blocks[3].setPosition(cx + 2, cy);
+        } else {
+            blocks[0].setPosition(cx, cy - 1);
+            blocks[2].setPosition(cx, cy + 1);
+            blocks[3].setPosition(cx, cy + 2);
+        }
+        return;
+    }
+
+    sf::Vector2i center = blocks[1].getPosition();
+    if (type == Fig_J || type == Fig_L) {
+        center = blocks[2].getPosition();
+    }
+
     for (int i = 0; i < 4; i++) {
-        int x2 = centerBlock.getPosition().x + centerBlock.getPosition().y - blocks[i].getPosition().y;
-        int y2 = blocks[i].getPosition().x + centerBlock.getPosition().y - centerBlock.getPosition().x;
-        blocks[i].setPosition(x2, y2);
+        int oldX = blocks[i].getPosition().x;
+        int oldY = blocks[i].getPosition().y;
+
+        int newX = center.x + center.y - oldY;
+        int newY = center.y - center.x + oldX;
+
+        blocks[i].setPosition(newX, newY);
     }
 }
+
 
 Block Figure::getBlock(int ind) {
     return blocks[ind];
